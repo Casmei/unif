@@ -1,11 +1,10 @@
 import NextAuth from "next-auth";
+import type { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
       credentials: {
         email: {},
         password: {},
@@ -24,6 +23,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return { token: user.token, ...user.user };
           }
 
+          console.log("RETORNOU NULL");
+
           return null;
         } catch (error) {
           return null;
@@ -32,10 +33,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/auth/sign-in",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token: initialToken, user }) {
+      const token = initialToken as JWT;
       if (user) {
         token.user = user;
         token.token = user.token;

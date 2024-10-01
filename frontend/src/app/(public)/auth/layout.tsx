@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/features/auth/auth.config";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -8,12 +8,8 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
 
-  if (!session) return redirect("/login");
-
+  if (session) return redirect("/");
   return (
-    <div>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
-      {children}
-    </div>
+    <div className="h-screen flex items-center justify-center">{children}</div>
   );
 }
