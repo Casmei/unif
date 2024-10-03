@@ -13,7 +13,10 @@ import { signInAction } from "@/features/auth/api/sign-in.action";
 
 export default function Page() {
   return (
-    <form action={signInAction} className="w-1/6">
+    <form
+      action={signInAction}
+      className="w-full max-w-md mx-auto p-4 sm:p-6 lg:p-8"
+    >
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="text-2xl">Entrar</CardTitle>
